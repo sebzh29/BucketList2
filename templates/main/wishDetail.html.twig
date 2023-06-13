@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %} {% endblock %}
+
+{% block title %}Wish Details{% endblock %}
+
+
+{% block body %}
+    <div>
+        <h2>Détail de mon souhait</h2>
+            {%  if(not wish) %}
+                <p>Ce souhait n'existe pas</p>
+            {% else %}
+                <p>Mon souhait est de {{ wish }}</p>
+            {%  endif %}
+        <br>
+        <p><a href="{{ path('app_list') }}">Retour</a></p>
+
+    </div>
+
+
+
+{% endblock %}

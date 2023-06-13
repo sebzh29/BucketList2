@@ -17,4 +17,13 @@ class MainController extends AbstractController
             'app_title' => $appTitle,
         ]);
     }
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+        $appTitle = 'Bucket List';
+
+        return $this->render('main/aboutus.html.twig', [
+            'app_title' => $appTitle,
+        ]);
+    }
 }
