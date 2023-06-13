@@ -18,7 +18,7 @@ class WishController extends AbstractController
     #[Route('/', name: 'list')]
     public function list(): Response
     {
-        return $this->render('main/list.html.twig', [
+        return $this->render('wish/list.html.twig', [
             'wishes' => $this->wishes
         ]);
     }
@@ -42,7 +42,7 @@ class WishController extends AbstractController
             $wish = $this->wishes[$id];
         }
 
-        return $this->render('main/wishDetail.html.twig', [
+        return $this->render('wish/wishDetail.html.twig', [
             'wish' => $wish,
         ]);
     }
