@@ -8,15 +8,27 @@
         {% block javascripts %} {% endblock %}
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
     </head>
-    <header>{% include('common/header/header.html.twig') %}</header>
+
     <body>
-     {% include('common/navigation/navigation.html.twig') %}
-        {% block body %}{% endblock %}
+        <header>
+            <div class="top-left-header">
+                {% include('common/header/header.html.twig') %}
+            </div>
+            <div>
+                {% include('common/navigation/navigation.html.twig') %}
+            </div>
+
+        </header>
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer>
+            {% include('common/footer/footer.html.twig') %}
+        </footer>
     </body>
-    <footer>
-        {% include('common/footer/footer.html.twig') %}
-    </footer>
+
 
 </html>
