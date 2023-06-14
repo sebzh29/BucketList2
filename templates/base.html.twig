@@ -5,14 +5,16 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
         {% block stylesheets %} {% endblock %}
+            {{ encore_entry_link_tags('app') }}
         {% block javascripts %} {% endblock %}
+            {{ encore_entry_script_tags('app') }}
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     </head>
 
     <body>
         <header>
-            <div class="top-left-header">
+            <div>
                 {% include('common/header/header.html.twig') %}
             </div>
             <div>
