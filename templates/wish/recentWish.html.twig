@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}Souhait Trié {% endblock %}
+{% block body %}
+    <h1>Hello recentWish</h1>
+    {%  for wish in wishes %}
+        <p>Mon souhait se nomme {{ wish.title }} et a été crée {{  wish.dateCreated|date }}<br></p>
+
+        <p>Son id est {{  wish.id }}<br></p>
+    {%  endfor %}
+{% endblock %}
