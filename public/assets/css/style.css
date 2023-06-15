@@ -89,6 +89,11 @@ footer{
 #content{
     background-color: #59A79A;/*Couleur de fond*/
 }
+
+.wishliste {
+    background-color: white;
+    color: black;
+}
  .menu {
 
  }

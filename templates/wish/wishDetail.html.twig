@@ -1,4 +1,4 @@
-{% extends './base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block stylesheets %} {% endblock %}
 
 {% block title %}Wish Details{% endblock %}
@@ -10,7 +10,10 @@
             {%  if(not wish) %}
                 <p>Ce souhait n'existe pas</p>
             {% else %}
-                <p>Mon souhait est de {{ wish }}</p>
+                <p>Mon souhait est de {{ wish.title}}<br></p>
+                <p>Description : {{ wish.description}}<br></p>
+                <p>Auteur : {{ wish.author}}<br></p>
+                <p>Date de création : {{ wish.dateCreated|date}}<br></p>
             {%  endif %}
         <br>
         <p><a href="{{ path('app_list') }}">Retour</a></p>
