@@ -12,6 +12,10 @@ h1 {
     color: red;
 }
 
+h2 {
+    text-align: center;
+}
+
 p{
     margin-top: 1em;
     font:1em Tahoma, Geneva, sans-serif;/* Taille et police de caractère utilisées */
@@ -25,7 +29,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    /*background-color: #333;*/
 }
 
 li {
@@ -97,3 +101,14 @@ footer{
  .menu {
 
  }
+
+ .mt-20 {
+     margin-top: 20px;
+ }
+
+ .detail {
+     margin-left: 20px;
+     margin-right: 20px;
+ }
+
+ /**Liste**/

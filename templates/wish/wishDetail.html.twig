@@ -5,15 +5,23 @@
 
 
 {% block body %}
-    <div>
+
+    <div class="detail">
         <h2>Détail de mon souhait</h2>
+
+
             {%  if(not wish) %}
                 <p>Ce souhait n'existe pas</p>
             {% else %}
+
                 <p>Mon souhait est de {{ wish.title}}<br></p>
                 <p>Description : {{ wish.description}}<br></p>
                 <p>Auteur : {{ wish.author}}<br></p>
                 <p>Date de création : {{ wish.dateCreated|date}}<br></p>
+
+                {% set category = wish.category %}
+
+                <p>Catégorie : {{ category.name }}<br></p>
             {%  endif %}
         <br>
         <p><a href="{{ path('app_list') }}">Retour</a></p>

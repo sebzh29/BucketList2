@@ -7,17 +7,34 @@
 {% block body %}
     <div>
 
-            <h2>Ma liste de souhaits</h2>
+        <h2>Ma liste de souhaits</h2>
+
+
+        <div class="detail">
+
                 <ul class="wishliste">
                     {%  for wish in wishes %}
-                        <p>Mon souhait serait de <a href=" {{ path('app_details' ,{'id' : wish.id})  }}">{{ wish.title }}</a></p>
-
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ asset('assets/img/wish.jpg') }}" class="card-img-top" alt="etoile filante">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ wish.id }}</h5>
+                                <p class="card-text">Mon souhait serait de {{ wish.title }}</p>
+                                <a href=" {{ path('app_details' ,{'id' : wish.id})  }}">{{ wish.title }}</a>
+                                <br>
+                                <hr>
+                            </div>
+                        </div>
                     {% endfor %}
                 </ul>
+        </div>
 
             <p>J'ai {{ wishesCount }} souhaits.</p>
 
     </div>
 
 
+
 {% endblock %}
+
+
+

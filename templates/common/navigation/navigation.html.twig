@@ -2,11 +2,21 @@
     <ul>
 
         <li><a href="{{ url('app_main') }}">Home</a></li>
+
         <li><a href="{{ url('app_list') }}">Souhaits</a></li>
+{#        {%  if is_granted("ROLE_ADMIN") %}#}
+{#           #}
+{#        {% endif %}#}
         <li><a href="{{ url('app_contact') }}">A propos</a></li>
 
+        {% if app.user %}
+           <p>Hello {{ app.user.userIdentifier }} !</p>
+            <li><a href="{{ url('app_create') }}">Ajout Souhaits</a></li>
+            <li><a href="{{ path('app_logout') }}">Logout</a></li>
+        {% else %}
 
-
-        <li><a href="">Login</a></li>
+            <li><a href="{{ path('app_login') }}">Login</a></li>
+            <li><a href="{{ path('app_register') }}">Register</a></li>
+        {% endif %}
     </ul>
 </nav>

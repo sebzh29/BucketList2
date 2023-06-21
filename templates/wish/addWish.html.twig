@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block title %}Wish create{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'un souhait</h1>
+
+    {{ form_start(wishForm) }}
+
+
+    <div class="container">
+        <div>
+            <div class="">
+                {{ form_label(wishForm.title) }} <br>
+                {{ form_widget(wishForm.title) }} <br>
+                {% if wishForm.title.vars.errors|length %}
+                    <div class="alert alert-warning">
+                        {{ form_errors(wishForm.title) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <div class="">
+            {{ form_label(wishForm.description) }} <br>
+            {{ form_widget(wishForm.description) }} <br>
+            {% if wishForm.vars.errors|length %}
+                <div class="alert alert-warning">
+                    {{ form_errors(wishForm.description) }}
+                </div>
+            {%  endif %}
+
+        </div>
+        <br>
+        <div class="">
+            {{ form_label(wishForm.author) }} <br>
+            {{ form_widget(wishForm.author) }} <br>
+            {{ form_errors(wishForm.author) }}
+        </div>
+        <br>
+
+        <br>
+        <div class="">
+            {{ form_label(wishForm.category) }} <br>
+            {{ form_widget(wishForm.category) }} <br>
+            {{ form_errors(wishForm.category) }}
+        </div>
+        <br>
+
+
+        <button class="btn btn-success mb-3" type="submit">Submit</button>
+    </div>
+
+
+    {{ form_end(wishForm) }}
+
+
+
+{% endblock %}

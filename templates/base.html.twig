@@ -4,11 +4,13 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
-        {% block stylesheets %} {% endblock %}
-            {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %} {{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block cssfiles %} <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">{% endblock %}
+
         {% block javascripts %} {% endblock %}
             {{ encore_entry_script_tags('app') }}
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
         <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     </head>
 
@@ -25,6 +27,11 @@
 
         <main>
             {% block body %}{% endblock %}
+            {%  for label, messages in app.flashes %}
+                {%  for message in messages %}
+                    <div class="alert alert-{{ label }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
         </main>
 
         <footer>

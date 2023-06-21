@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Wish;
+use App\Form\WishFormType;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function Symfony\Component\Clock\now;
 
 #[Route('/wish', name: 'app_')]
 class WishController extends AbstractController
@@ -18,6 +23,7 @@ class WishController extends AbstractController
         "3" => "surf",
 
     ];
+    #[IsGranted("ROLE_USER")]
     #[Route('/', name: 'list')]
     public function list(WishRepository $wishRepository): Response
     {
@@ -39,6 +45,7 @@ class WishController extends AbstractController
         requirements:  ["id" => "\d+"],
         methods: ["GET"]
     )]
+    #[IsGranted("ROLE_USER")]
     public function details($id, WishRepository $wishRepository): Response
     {
         $wish = $wishRepository->find($id);
@@ -48,25 +55,62 @@ class WishController extends AbstractController
         ]);
     }
 
+//    #[route('/create', name: 'create')]
+//    public function create(EntityManagerInterface $entityManager): Response
+//    {
+//        $wish = new Wish();
+//        $wish->setTitle("Faire du perl");
+//        $wish->setDescription("gkjdfjdhsdjkfksdhfsdfjkshjlll");
+//        $wish->setAuthor('Moi');
+//        $wish->setIsPublished("1");
+//        $date = new \DateTime();
+//        $wish->setDateCreated($date);
+//
+//        dump($wish);
+//
+//        $entityManager->persist($wish);
+//
+//        $entityManager->flush();
+//
+//        return $this->render('wish/create.html.twig', [
+//            'wish' => $wish
+//        ]);
+//    }
+
+            /****FORMULAIRE*************/
+
+    #[IsGranted("ROLE_USER")]
     #[route('/create', name: 'create')]
-    public function create(EntityManagerInterface $entityManager): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
+        $user = $this->getUser()->getUserIdentifier();
         $wish = new Wish();
-        $wish->setTitle("Faire du perl");
-        $wish->setDescription("gkjdfjdhsdjkfksdhfsdfjkshjlll");
-        $wish->setAuthor('Moi');
-        $wish->setIsPublished("1");
-        $date = new \DateTime();
-        $wish->setDateCreated($date);
 
-        dump($wish);
+        $wishForm = $this->createForm(WishFormType::class, $wish, ['user' =>$user]);
 
-        $entityManager->persist($wish);
+        $wishForm->handleRequest($request);
 
-        $entityManager->flush();
+        if($wishForm->isSubmitted() && $wishForm->isValid()) {
 
-        return $this->render('wish/create.html.twig', [
-            'wish' => $wish
+            $wish->setIsPublished(true);
+            $wish->setDateCreated(now());
+
+            try {
+
+                $entityManager->persist($wish);
+                $entityManager->flush();
+
+                $this->addFlash('success', "Le souhait a bien été inséré en BDD");
+
+                return $this->redirectToRoute('app_details', ['id' =>  $wish->getId()]);
+
+            } catch (Exception $exception) {
+                $this->addFlash('danger', "Putain d'erreur d'insertion");
+            }
+        }
+
+        return $this->render('wish/addWish.html.twig', [
+            'wishForm' => $wishForm->createView()
         ]);
     }
     #[route('/recentWish', name: 'recent_wish')]
