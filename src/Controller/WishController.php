@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishFormType;
+use App\Notification\NotificationService;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -81,7 +82,10 @@ class WishController extends AbstractController
 
     #[IsGranted("ROLE_USER")]
     #[route('/create', name: 'create')]
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(EntityManagerInterface $entityManager,
+                           Request $request,
+                           NotificationService $notificationService
+    ): Response
     {
         $user = $this->getUser()->getUserIdentifier();
         $wish = new Wish();
@@ -101,8 +105,15 @@ class WishController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', "Le souhait a bien été inséré en BDD");
+                $senderMail = $this->getParameter('mail.contact');
+                $receiverMail = $this->getParameter('mail.admin');
+                $user = $this->getUser();
+
+                $notificationService->SendMailWishCreation($senderMail, $receiverMail, $user); //envoi mail notif
 
                 return $this->redirectToRoute('app_details', ['id' =>  $wish->getId()]);
+
+
 
             } catch (Exception $exception) {
                 $this->addFlash('danger', "Putain d'erreur d'insertion");
